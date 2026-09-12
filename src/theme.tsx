@@ -1,3 +1,7 @@
+/**
+ * Theme runtime — aplica data-theme en <html>.
+ * Tokens de color: src/styles/tokens.css
+ */
 import {
   createContext,
   useContext,
