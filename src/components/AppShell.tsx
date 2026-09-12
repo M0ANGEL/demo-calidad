@@ -1,14 +1,14 @@
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import { useAuth } from '../auth'
 import { modules, navGroups } from '../data/modules'
 import { ThemeToggle } from './ThemeToggle'
 import { NotificationCenter } from './NotificationCenter'
 import { BrandMark } from './BrandMark'
+import { UserMenu } from './UserMenu'
 
 export function AppShell() {
-  const { user, logout } = useAuth()
-  const navigate = useNavigate()
+  const { user } = useAuth()
   const location = useLocation()
   const [open, setOpen] = useState(false)
 
@@ -25,11 +25,6 @@ export function AppShell() {
     if (!activeGroup) return
     setExpanded((prev) => ({ ...prev, [activeGroup]: true }))
   }, [activeGroup])
-
-  const handleLogout = () => {
-    logout()
-    navigate('/login')
-  }
 
   const toggleGroup = (group: string) => {
     setExpanded((prev) => ({ ...prev, [group]: !prev[group] }))
@@ -111,18 +106,7 @@ export function AppShell() {
           <div className="topbar-actions">
             <ThemeToggle compact />
             <NotificationCenter />
-            <div className="topbar-user">
-              <div className="avatar" aria-hidden>
-                {user?.name?.slice(0, 1)}
-              </div>
-              <div className="topbar-user-text">
-                <strong>{user?.name}</strong>
-                <small>{user?.role}</small>
-              </div>
-              <button type="button" className="btn btn-ghost" onClick={handleLogout}>
-                Salir
-              </button>
-            </div>
+            <UserMenu />
           </div>
         </header>
         <main className="content">
