@@ -1,8 +1,11 @@
 {
-  "name": "calida-demo",
+  "name": "demo-calidad",
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -23,5 +26,5 @@
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
   },
-  "description": "Demo maqueta ERP SIG HSEQ CALIDA"
+  "description": "Demo comercial zemyx | HSEQ — maqueta SIG sin backend"
 }

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { dashboardKpis, modules } from '../data/modules'
 import type { Semaphore } from '../data/modules'
+import { CriticalAlertsBanner } from '../components/CriticalAlertsBanner'
 
 function Dot({ level }: { level: Semaphore }) {
   return <span className={`semaforo semaforo-${level}`} aria-hidden />
@@ -28,12 +29,18 @@ export function DashboardPage() {
             Vista gerencial de calidad, ambiente y SST con semáforo de decisión.
           </p>
         </div>
-        <div className="demo-pill">Demo · sin persistencia</div>
+        <div className="demo-pill">Demo comercial · sin persistencia</div>
       </header>
 
+      <CriticalAlertsBanner />
+
       <section className="kpi-grid">
-        {dashboardKpis.map((kpi) => (
-          <article key={kpi.label} className="kpi-tile">
+        {dashboardKpis.map((kpi, i) => (
+          <article
+            key={kpi.label}
+            className={`kpi-tile sem-${kpi.semaphore}`}
+            style={{ animationDelay: `${i * 55}ms` }}
+          >
             <div className="kpi-top">
               <Dot level={kpi.semaphore} />
               <span>{kpi.label}</span>
@@ -46,10 +53,10 @@ export function DashboardPage() {
 
       <div className="dash-split">
         <section className="panel">
-          <h2>Acciones y alertas</h2>
+          <h2>Acciones prioritarias</h2>
           <ul className="action-list">
             {pending.map((item) => (
-              <li key={item.text}>
+              <li key={item.text} className={`action-${item.level}`}>
                 <Dot level={item.level} />
                 <Link to={item.to}>{item.text}</Link>
               </li>
@@ -58,9 +65,9 @@ export function DashboardPage() {
         </section>
 
         <section className="panel">
-          <h2>MVP sugerido</h2>
+          <h2>Núcleo MVP para venta</h2>
           <p className="muted">
-            Núcleo comercial inicial: documentos, legal, riesgos, auditorías, NC/acciones, indicadores y dashboard.
+            Documentos, legal, riesgos, auditorías, NC/acciones, indicadores y dashboard.
           </p>
           <div className="chip-row">
             {spotlight.map((m) => (
